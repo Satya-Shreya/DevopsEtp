@@ -1,29 +1,35 @@
-pipeline{
+pipeline {
     agent any
-    triggers{
+
+    triggers {
         pollSCM 'H/3 * * * *'
     }
-    stages{
-        stage('Build'){
 
-           script{
-             echo "build stage"
+    stages {
+        stage('Build') {
+            steps {
+                script {
+                    echo "Building Docker image..."
+                    // Build Docker image from Dockerfile
+                    sh 'docker build -t my-image-name .'
+                    
+                    echo "Running Docker container..."
+                    // Run Docker container (detached mode)
+                    sh 'docker run -d --name my-container -p 8080:80 my-image-name'
+                }
+            }
+        }
 
-            sh 'docker build -t html_image .'
-
-            sh 'docker run -it -d --name website -p 8081:80 html_image'
-           }
-           stage('Test'){
-            steps{
+        stage('Test') {
+            steps {
                 echo "test stage"
             }
-           }
-           stage('Deploy'){
-            steps{
+        }
+
+        stage('Deploy') {
+            steps {
                 echo "deploy stage"
             }
-           }
         }
-      
     }
 }
