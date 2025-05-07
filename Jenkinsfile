@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Build') {
             
-                script {
+                steps {
                     echo "Building Docker image..."
                     // Build Docker image from Dockerfile
                     sh 'docker build -t my-image-name .'
