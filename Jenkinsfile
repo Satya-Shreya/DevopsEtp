@@ -13,14 +13,10 @@ pipeline {
         }
         stage('Build') {
             steps {
-                script {
+                steps {
                     echo "Building Docker image..."
                     // Build Docker image from Dockerfile
-                    sh 'docker build -t my-image-name .'
-                    
-                    echo "Running Docker container..."
-                    // Run Docker container (detached mode)
-                    sh 'docker run -d --name my-container -p 8080:80 my-image-name'
+                
                 }
             }
         }
